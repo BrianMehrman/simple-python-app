@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: simple-app
+    component: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-app
+      component: postgres
+  template:
+    metadata:
+      labels:
+        app: simple-app
+        component: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:12.4
+          # volumeMounts:
+          #   - mountPath: /var/lib/postgresql/data
+          #     name: postgres-pv-claim
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: user
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres
+                  key: database
+      # volumes:
+      #   - name: postgres-pv-claim
+      #     persistentVolumeClaim:
+      #       claimName: postgres-pv-claim

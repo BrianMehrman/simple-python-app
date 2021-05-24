@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <title>{{ title }}</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                date
+            </th>
+            <th>
+                country
+            </th>
+            <th>
+                cases
+            </th>
+            <th>
+                deaths
+            </th>
+            <th>
+                recoveries
+            </th>
+        </tr>
+
+        <!-- For loop logic of jinja template -->
+        {%for i in range(0, len)%}
+        <tr>
+            <td>
+                {{records[i]["id"]}}
+            </td>
+            <td>
+                {{records[i]["date"]}}
+            </td>
+            <td>
+                {{records[i]["country"]}}
+            </td>
+            <td>
+                {{records[i]["cases"]}}
+            </td>
+            <td>
+                {{records[i]["deaths"]}}
+            </td>
+            <td>
+                {{records[i]["recoveries"]}}
+            </td>
+        </tr>
+        {%endfor%}
+    </table>
+</body>
+
+</html>

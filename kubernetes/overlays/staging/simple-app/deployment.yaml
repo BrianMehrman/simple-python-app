@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: simple-app
+    component: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-app
+      component: web
+  template:
+    metadata:
+      labels:
+        app: simple-app
+        component: web
+    spec:
+      containers:
+        - name: web
+          image: bcmehrman/simple-python-app
+          imagePullPolicy: Never
+          tty: true
+          envFrom:
+            - configMapRef:
+                name: config-app
