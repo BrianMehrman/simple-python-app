@@ -17,7 +17,29 @@ This app is built using python, postgres, and redis.
 
 All dependencies are provided using Kubernetes. 
 
+## Install
+
+install poetry
+
+```
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+```
+
+install dependencies
+
+```
+poetry install
+```
+
+Postgres will need to be running locally to develop on this app. You can use the `base` Kubernetes configs for that.
+
+```
+kubectl apply -k kubernetes/base
+```
+
 ## Usage
+
+setup environment variables
 
 ```
 export PYTHONPATH=$(pwd) 
@@ -25,7 +47,17 @@ export DATABASE_URL="postgresql://postgres:password@localhost:5432/simple_databa
 export FLASK_APP=simple_web_app.app
 ```
 
+## Start
+
+```
+poetry run python simple_web_app/app.py
+```
+
 ## Docker
+
+```
+docker build -t bcmehrman/simple-python-app -f docker/Dockerfile .
+```
 
 ## Kubernetes
 
@@ -34,3 +66,7 @@ Process
 * Once they are stable deploy web app
  * Init container will load seed data
  * Once data is loads app will start  
+
+ ```
+ kubectl apply -k kubernetes/overlays/staging
+ ```
