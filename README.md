@@ -49,8 +49,16 @@ export FLASK_APP=simple_web_app.app
 
 ## Start
 
+
+To run the flask app 
 ```
 poetry run python simple_web_app/app.py
+```
+
+Load sample data
+
+```
+poetry run python load.py
 ```
 
 ## Docker
@@ -70,3 +78,9 @@ Process
  ```
  kubectl apply -k kubernetes/overlays/staging
  ```
+
+
+ ## Sources
+
+ * Poetry Docker [link](https://stackoverflow.com/questions/53835198/integrating-python-poetry-with-docker)
+ * Flask / SQLAlchemy [link](https://towardsdatascience.com/use-flask-and-sqlalchemy-not-flask-sqlalchemy-5a64fafe22a4)
