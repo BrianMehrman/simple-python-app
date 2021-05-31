@@ -47,8 +47,16 @@ export DATABASE_URL="postgresql://postgres:password@localhost:5432/simple_databa
 export FLASK_APP=simple_web_app.app
 ```
 
-## Start
+## Run migrations
 
+This application uses alembic to manage the database migrations
+
+```
+
+```
+
+
+## Start app
 
 To run the flask app 
 ```
@@ -61,6 +69,22 @@ Load sample data
 poetry run python load.py
 ```
 
+## App
+
+This app has 3 routes
+
+### /index
+
+Links to the rest of the app.
+
+### /welcome/<name>
+
+An endpoint that will take a string and render it as a name using an HTML template.
+
+### /results
+
+returns the records loaded by the `load.py` script.
+
 ## Docker
 
 ```
@@ -70,15 +94,27 @@ docker build -t bcmehrman/simple-python-app -f docker/Dockerfile .
 ## Kubernetes
 
 Process
+
 * Deploy Postgres and Redis
 * Once they are stable deploy web app
- * Init container will load seed data
- * Once data is loads app will start  
+ * Init container will load schema data 
+ * Apply job after everything starts up
+
+
+Apply staging overlay to start app.
 
  ```
- kubectl apply -k kubernetes/overlays/staging
+ ╰─$ kubectl apply -k kubernetes/overlays/staging
  ```
 
+Apply job to load data
+ ```
+╰─$ kubectl apply -f kubernetes/overlays/staging/simple-app/load-data-job.yaml
+ ```
+
+## Todo
+
+- Add tests for testing phase
 
  ## Sources
 

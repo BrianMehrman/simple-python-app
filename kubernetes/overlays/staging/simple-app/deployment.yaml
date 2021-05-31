@@ -25,3 +25,11 @@ spec:
           envFrom:
             - configMapRef:
                 name: config-app
+      initContainers:
+        - name: run-migrations
+          image: bcmehrman/simple-python-app
+          imagePullPolicy: Never
+          command: ['alembic', 'upgrade', 'head']
+          envFrom:
+            - configMapRef:
+                name: config-app

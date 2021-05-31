@@ -40,6 +40,7 @@ COPY . /simple_web_app
 
 WORKDIR /simple_web_app
 # Creating folders, and files for a project:
+RUN apt-get update && apt-get install -f -y postgresql-client
 
 # CMD ["/bin/bash"]
 CMD ["python", "simple_web_app/app.py"]

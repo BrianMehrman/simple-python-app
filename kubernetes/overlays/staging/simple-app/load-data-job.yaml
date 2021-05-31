@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-data-job
+  labels:
+    app: simple-app
+    component: job
+spec:
+  template:
+    spec:
+      containers:
+        - name: load-data-job
+          image: bcmehrman/simple-python-app
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: config-app
+          command: ['python', 'load.py']
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-postgres
+          image: bcmehrman/simple-python-app
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: config-app
+          command: ['pg_isready', '-h', 'postgres']
+        - name: check-for-schema
+          image: bcmehrman/simple-python-app
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: config-app
+          command:
+            - 'sh'
+            - '-c'
+            - >
+              matching_table_count=$(PGPASSWORD="$DATABASE_PASSWORD" psql -U "$DATABASE_USERNAME" -h "$DATABASE_HOST" bi_export -c "\\d" | grep -c records);
+
+              if [ "$matching_table_count" -eq 0 ]; then
+                exit 0
+              else
+                exit 1
+              fi

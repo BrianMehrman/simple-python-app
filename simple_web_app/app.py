@@ -7,8 +7,6 @@ import os
 from simple_web_app import models
 from simple_web_app.database import SessionLocal, engine
 
-models.Base.metadata.create_all(bind=engine)
-
 app = Flask(__name__)
 app.app_context().push()
 
