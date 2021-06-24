@@ -1,0 +1,21 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: acid-minimal-cluster
+  namespace: default
+spec:
+  teamId: "acid"
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    simpleweb:  # database owner
+    - superuser
+    - createdb
+    simpleweb_user: []  # role for application foo
+  databases:
+    simple_database: simpleweb  # dbname: owner
+  preparedDatabases:
+    simple_database: {}
+  postgresql:
+    version: "13"

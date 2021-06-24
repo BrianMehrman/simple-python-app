@@ -24,7 +24,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: config-app
-          command: ['pg_isready', '-h', 'postgres']
+          command: ['pg_isready']
+          args: ['-h', '$(DATABASE_HOST)']
         - name: check-for-schema
           image: bcmehrman/simple-python-app
           imagePullPolicy: Always
@@ -35,8 +36,9 @@ spec:
             - 'sh'
             - '-c'
             - >
+              echo "checking ${DATABASE_NAME}";
               matching_table_count=$(PGPASSWORD="$DATABASE_PASSWORD" psql -U "$DATABASE_USERNAME" -h "$DATABASE_HOST" "$DATABASE_NAME" -c "\\d" | grep -c records);
-
+              echo "match ${matching_table_count}";
               if [ "$matching_table_count" -eq 0 ]; then
                 exit 1
               else
