@@ -51,12 +51,13 @@ metadata:
     name: web
 spec:
     template:
-        containers:
-            - name: web
-              imagePullPolicy: Never
-        initContainers:
-            - name: run-migrations
-              imagePullPolicy: Never
+        spec:
+            containers:
+                - name: web
+                imagePullPolicy: Never
+            initContainers:
+                - name: run-migrations
+                imagePullPolicy: Never
 
 EOF
 
