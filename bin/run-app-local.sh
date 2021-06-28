@@ -48,7 +48,7 @@ cat <<EOF >deployment-patch.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: simple-app
+    name: web
 spec:
     template:
         containers:
