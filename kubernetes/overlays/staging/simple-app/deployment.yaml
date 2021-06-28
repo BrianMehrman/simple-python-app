@@ -20,7 +20,6 @@ spec:
       containers:
         - name: web
           image: bcmehrman/simple-python-app
-          imagePullPolicy: Never
           tty: true
           envFrom:
             - configMapRef:
@@ -28,7 +27,6 @@ spec:
       initContainers:
         - name: run-migrations
           image: bcmehrman/simple-python-app
-          imagePullPolicy: Never
           command: ['alembic', 'upgrade', 'head']
           envFrom:
             - configMapRef:
