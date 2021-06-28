@@ -61,7 +61,7 @@ spec:
 EOF
 
 echo "patchesStrategicMerge:\n  - deployment-patch.yaml" >> kustomization.yaml
-
+cat kustomization.yaml
 kustomize build . >> build.yaml
 cat build.yaml
 kubectl ${RUN_ACTION} -f build.yaml
