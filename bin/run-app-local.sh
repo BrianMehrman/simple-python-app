@@ -60,7 +60,7 @@ spec:
 
 EOF
 
-kustomize edit add patch --path deployment-patch.yaml --kind Deployment --name simple-app
+echo "patchessStrategicMerge:\n  - deployment-patch.yaml" >> kustomization.yaml
 
 kustomize build . >> build.yaml
 cat build.yaml
