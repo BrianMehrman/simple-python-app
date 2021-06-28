@@ -60,7 +60,7 @@ spec:
 
 EOF
 
-echo "patchessStrategicMerge:\n  - deployment-patch.yaml" >> kustomization.yaml
+echo "patchesStrategicMerge:\n  - deployment-patch.yaml" >> kustomization.yaml
 
 kustomize build . >> build.yaml
 cat build.yaml
