@@ -53,11 +53,11 @@ spec:
     template:
         spec:
             containers:
-                - name: web
-                imagePullPolicy: Never
+            - name: web
+              imagePullPolicy: Never
             initContainers:
-                - name: run-migrations
-                imagePullPolicy: Never
+            - name: run-migrations
+              imagePullPolicy: Never
 
 EOF
 
