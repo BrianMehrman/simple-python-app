@@ -24,6 +24,12 @@ kustomize edit set namespace "${NAMESPACE}"
 echo "Adding resource from  ${base}"
 kustomize edit add resource "../../${base}"
 
+
+if [ -v RUN_IMAGE ]; then
+    echo "Found image to replace: ${RUN_IMAGE}";
+    kustomize edit image "${RUN_IMAGE}"
+fi 
+
 echo "Creating patch for db"
 cat <<EOF >db-patch.yaml
 apiVersion: v1
