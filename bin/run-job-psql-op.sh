@@ -1,14 +1,15 @@
 #!/bin/bash
 
 : ${RUN_ACTION='apply'}
-export host='postgres';
-export port="5432";
-export password='password';
-export username='postgres';
-export database="simple_database";
+
+export host=$(kubectl get services -o jsonpath={.items..metadata.name} -l application=spilo,cluster-name=acid-minimal-cluster,spilo-role=master -n default);
+export port="5432"
+export password=$(kubectl get secret postgres.acid-minimal-cluster.credentials -o 'jsonpath={.data.password}' | base64 -d)
+export username=$(kubectl get secret postgres.acid-minimal-cluster.credentials -o 'jsonpath={.data.username}' | base64 -d)
+export database="simple_database"
 
 scriptdir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-base="kubernetes/overlays/staging/load-data"
+base="kubernetes/overlays/postgres-op/load-data"
 tmp_dir=$(mktemp -d tmp/ci-XXXXXXXXXX)
 
 echo "Temp dir: ${tmp_dir}"
