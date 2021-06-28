@@ -25,8 +25,8 @@ echo "Adding resource from  ${base}"
 kustomize edit add resource "../../${base}"
 
 if [ -v RUN_IMAGE ]; then
-    echo "Found image to replace: ${RUN_IMAGE}";
-    kustomize edit image "${RUN_IMAGE}"
+    echo "Found image to replace: ${FROM_IMAGE}->${RUN_IMAGE}";
+    kustomize edit image ${FROM_IMAGE}=${RUN_IMAGE}
 fi 
 
 echo "Creating patch for db"
