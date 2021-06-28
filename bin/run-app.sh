@@ -1,6 +1,7 @@
 #!/bin/bash
 
 : ${RUN_ACTION='apply'}
+: ${NAMESPACE='default'}
 
 export host='postgres';
 export port="5432"
@@ -18,7 +19,7 @@ echo "Creating new kustomization"
 kustomize create --autodetect
 
 echo "Setting namespace ${NAMESPACE}"
-kustomize edit set namespace default
+kustomize edit set namespace "${NAMESPACE}"
 
 echo "Adding resource from  ${base}"
 kustomize edit add resource "../../${base}"
