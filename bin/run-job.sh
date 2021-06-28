@@ -32,4 +32,6 @@ EOF
 
 kustomize edit add patch --path db-patch.yaml --kind ConfigMap --name config-app
 
-kustomize build . | kubectl ${RUN_ACTION} -f -
+kustomize build . >> build.yaml
+cat build.yaml
+kubectl ${RUN_ACTION} -f build.yaml
