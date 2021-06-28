@@ -1,6 +1,7 @@
 #!/bin/bash
 
 : ${RUN_ACTION='apply'}
+: ${NAMESPACE='default'}
 export host='postgres';
 export port="5432";
 export password='password';
@@ -14,10 +15,17 @@ tmp_dir=$(mktemp -d tmp/ci-XXXXXXXXXX)
 echo "Temp dir: ${tmp_dir}"
 cd $tmp_dir
 
+echo "Creating new kustomization"
+
 kustomize create --autodetect
-kustomize edit set namespace default
+echo "Setting namespace ${NAMESPACE}"
+
+kustomize edit set namespace "${NAMESPACE}"
+
+echo "Adding resource from  ${base}"
 kustomize edit add resource "../../${base}"
 
+echo "Creating patch for db"
 cat <<EOF >db-patch.yaml
 apiVersion: v1
 kind: ConfigMap
