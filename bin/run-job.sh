@@ -16,7 +16,6 @@ echo "Temp dir: ${tmp_dir}"
 cd $tmp_dir
 
 echo "Creating new kustomization"
-
 kustomize create --autodetect
 echo "Setting namespace ${NAMESPACE}"
 

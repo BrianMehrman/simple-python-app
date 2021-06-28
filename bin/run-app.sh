@@ -14,10 +14,16 @@ tmp_dir=$(mktemp -d tmp/ci-XXXXXXXXXX)
 echo "Temp dir: ${tmp_dir}"
 cd $tmp_dir
 
+echo "Creating new kustomization"
 kustomize create --autodetect
+
+echo "Setting namespace ${NAMESPACE}"
 kustomize edit set namespace default
+
+echo "Adding resource from  ${base}"
 kustomize edit add resource "../../${base}"
 
+echo "Creating patch for db"
 cat <<EOF >db-patch.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -32,4 +38,6 @@ EOF
 
 kustomize edit add patch --path db-patch.yaml --kind ConfigMap --name config-app
 
-kustomize build . | kubectl ${RUN_ACTION} -f -
+kustomize build . >> build.yaml
+cat build.yaml
+kubectl ${RUN_ACTION} -f build.yaml
