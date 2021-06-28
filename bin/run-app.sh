@@ -8,7 +8,7 @@ export password='password'
 export username='postgres'
 export database="simple_database"
 scriptdir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-base="kubernetes/overlays/staging/simple-app"
+base="kubernetes/overlays/staging"
 tmp_dir=$(mktemp -d tmp/ci-XXXXXXXXXX)
 
 echo "Temp dir: ${tmp_dir}"
